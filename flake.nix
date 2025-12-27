@@ -12,7 +12,7 @@
     # The shim is disabled by default for macOS SDK 12+
     # nixpkgs 24.11 is the last stable version which provides macOS 11 SDK
     nixpkgs.url = "github:NixOS/nixpkgs/24.11";
-    # nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
 
     systems.url = "github:nix-systems/default-darwin";
   };
