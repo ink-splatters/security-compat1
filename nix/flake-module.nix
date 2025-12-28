@@ -33,7 +33,7 @@
             name = "hello-bigsur";
             inherit src;
             modRoot = "./examples/hello-bigsur";
-            vendorHash = "sha256-nLSKwPFG6WYGczxurnzy89RwkzZpZcHXUNnH12LXLQQ=";
+            vendorHash = "sha256-/ian8Wgg1aT/XmKXKa4InwlmhRfL0qIriPTPqMoveg0=";
 
             env.CGO_ENABLED = 1;
           }
