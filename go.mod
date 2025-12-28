@@ -1,3 +1,3 @@
-module github.com/ink-splatters/security-compat
+module github.com/ink-splatters/darwin-sectrust-compat
 
 go 1.25

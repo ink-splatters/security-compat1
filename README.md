@@ -1,6 +1,6 @@
-# security-compat
+# Darwin Security Trust API compatibility shim
 
-A shim that does exactly one thing:
+The shim that does exactly one thing:
 
 provides symbol `_SecTrustCopyCertificateChain` (macOS 12+ API) on earlier macOS versions.
 
@@ -29,12 +29,12 @@ The dylib must export `_SecTrustCopyCertificateChain` (and must not import it).
 <details><summary>Click here for details</summary>
 
 ```sh
-LIBSECCOMPAT=libsecurity_compat.dylib
-# LIBSECCOMPAT=result/lib/libsecurity_compat.dylib
+LIBSECTRUSTCOMPAT=libsectrust_compat.dylib
+# LIBSECTRUSTCOMPAT=result/lib/libsectrust_compat.dylib
 
-❯ nm -u "$LIBSECCOMPAT" | grep -o _SecTrustCopyCertificateChain
+❯ nm -u "$LIBSECTRUSTCOMPAT" | grep -o _SecTrustCopyCertificateChain
 
-❯ nm -g "$LIBSECCOMPAT" | grep -o _SecTrustCopyCertificateChain
+❯ nm -g "$LIBSECTRUSTCOMPAT" | grep -o _SecTrustCopyCertificateChain
 _SecTrustCopyCertificateChain
 
 ```
@@ -46,7 +46,7 @@ _SecTrustCopyCertificateChain
 ### Running go1.25 on macOS Big Sur
 
 ```sh
-❯  DYLD_INSERT_LIBRARIES="$LIBSECCOMPAT" DYLD_FORCE_FLAT_NAMESPACE=1 go version
+❯  DYLD_INSERT_LIBRARIES="$LIBSECTRUSTCOMPAT" DYLD_FORCE_FLAT_NAMESPACE=1 go version
 go version go1.25.4 darwin/arm64
 
 ```
@@ -61,7 +61,7 @@ As a safenet, the shim is disabled if newer macOS SDK is detected.
 
 To override this behavior, use `-DSECTRUST_COMPAT`.
 
-Details: [security_compat.c](./security_compat.c)
+Details: [darwin_sectrust_compat.c](./darwin_sectrust_compat.c)
 
 ## License
 

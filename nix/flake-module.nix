@@ -2,13 +2,18 @@
   imports = [
     ./common
   ];
-  perSystem = {config, ...}: let
+  perSystem = {
+    config,
+    pkgs-unstable,
+    ...
+  }: let
     inherit (config) commonArgs src toolchain;
-    name = "security_compat";
+    inherit (pkgs-unstable.lib) replaceString;
+    name = "sectrust-compat";
   in {
     config = {
       packages = {
-        security_compat = toolchain.llvm.stdenv.mkDerivation ({
+        "${name}" = toolchain.llvm.stdenv.mkDerivation ({
             inherit name;
             inherit src;
 
@@ -16,7 +21,7 @@
               runHook preInstall
 
               mkdir -p $out/lib
-              cp lib${name}.dylib $out/lib
+              cp lib${replaceString "-" "_" name}.dylib $out/lib
 
               runHook postBuild
             '';
@@ -28,7 +33,7 @@
             name = "hello-bigsur";
             inherit src;
             modRoot = "./examples/hello-bigsur";
-            vendorHash = "sha256-9j+EXca38U0H8WLmmW6BU5lZn/JgO+W+rLxP6p0nVfQ=";
+            vendorHash = "sha256-nLSKwPFG6WYGczxurnzy89RwkzZpZcHXUNnH12LXLQQ=";
 
             env.CGO_ENABLED = 1;
           }

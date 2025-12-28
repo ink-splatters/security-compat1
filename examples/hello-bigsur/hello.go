@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	_ "github.com/ink-splatters/security-compat"
+	_ "github.com/ink-splatters/darwin-sectrust-compat"
 )
 
 func main() {

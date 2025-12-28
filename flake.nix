@@ -51,10 +51,10 @@
         options.src = lib.mkOption {
           default = builtins.path {
             path = ./.;
-            name = "security-compat";
+            name = "sectrust-compat";
           };
         };
-        config.packages.default = config.packages.security_compat;
+        config.packages.default = config.packages.sectrust-compat;
       };
 
       flake = {

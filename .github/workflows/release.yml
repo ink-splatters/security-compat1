@@ -26,8 +26,26 @@ jobs:
           echo "message<<EOF" >> $GITHUB_OUTPUT
           echo "$MSG" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Archive Artifacts
+        id: archive
+        run: |
+          ARCH=$(uname -m)
+          VERSION="${{ github.ref_name }}"
+          # Ensure consistent naming
+          BASENAME="libsectrust_compat"
+          DYLIB_NAME="${BASENAME}.dylib"
+          # e.g. libsectrust_compat-v0.0.1-arm64.tar.gz
+          ARCHIVE_NAME="${BASENAME}-${VERSION}-${ARCH}.tar.gz"
+          
+          echo "Creating archive $ARCHIVE_NAME..."
+          # -C changes to directory so tarball contains just the file
+          tar -czvf "$ARCHIVE_NAME" -C result/lib "$DYLIB_NAME"
+          
+          echo "archive_path=$ARCHIVE_NAME" >> $GITHUB_OUTPUT
+
       - name: Create Release
         uses: softprops/action-gh-release@v1
         with:
           body: ${{ steps.tag_msg.outputs.message }}
-          files: result/lib/*
+          files: ${{ steps.archive.outputs.archive_path }}
